@@ -1,5 +1,6 @@
 vendor
 config/database*
-logs/*
+logs/
+logs/dev.log
 composer.lock
 .DS_Store

@@ -29,6 +29,7 @@ class BaseControllerProvider implements ControllerProviderInterface {
                     }
                 }
             }
+            $app['params']['ip'] = $_SERVER['REMOTE_ADDR'];
         };
         $this->api = $app['controllers_factory'];
         $this->api->before($setParams);

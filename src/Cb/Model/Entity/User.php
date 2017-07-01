@@ -8,6 +8,7 @@ class User implements UserInterface
     private $id;
     private $username;
     private $password;
+    private $ip;
     private $salt;
     private $email;
     private $first_name;
@@ -24,8 +25,7 @@ class User implements UserInterface
 
         if(!isset($user['salt'])){
             $this->salt = $this->_getSalt();
-            $this->password = $this->_getPassword(
-                isset($user['password'])?$user['password']:'');
+            $this->password = $this->_getPassword(isset($user['password'])?$user['password']:'');
         }else{
             $this->salt = isset($user['salt'])?$user['salt']:'';
             $this->password = isset($user['password'])?$user['password']:'';
@@ -34,10 +34,10 @@ class User implements UserInterface
         $this->email = isset($user['email'])?$user['email']:'';
         $this->first_name = isset($user['first_name'])?$user['first_name']:'';
         $this->last_name = isset($user['last_name'])?$user['last_name']:'';
-        $this->groups = isset($user['groups'])?$user['groups']:array();
+        $this->ip = isset($user['ip'])?$user['ip']:'';
+        // $this->groups = isset($user['groups'])?$user['groups']:array();
 
-        $this->create_date = isset($user['create_date'])?$user['create_date']:0;
-        $this->superuser = isset($user['superuser'])?$user['superuser']:0;
+        // $this->superuser = isset($user['superuser'])?$user['superuser']:0;
     }
 
     public function getId()
@@ -105,10 +105,9 @@ class User implements UserInterface
             'password'   => $this->password,
             'salt'       => $this->salt,
             'email'      => $this->email,
+            'ip_address'      => $this->ip,
             'first_name' => $this->first_name,
-            'last_name'  => $this->last_name,
-            'create_date'  => $this->create_date,
-            'superuser'  => $this->superuser
+            'last_name'  => $this->last_name
         );
     }
 

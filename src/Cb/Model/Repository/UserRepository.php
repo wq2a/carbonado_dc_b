@@ -73,51 +73,52 @@ class UserRepository extends BaseRepository {
     public function register($params, $dataset)
     {
         $account = $params['user'];
-        try {
-            $user = array();
-            $this->parseUser($account, $user, $roles);
-
-            // Check for required params
-            if(!isset($user['username'])) {
-              // return error, no username
-              return array('status'=>'error','message'=>'Username is required.');
-            }
-            // check if the username exists
-            if($this->existsUser($user['username'])){
-              // return error, user already exists
-              $this->rx_error_log("User exists ");
-              return array('status'=>'error', 'message'=>'User already exists');
-            }
-            // Check for password or vuuser who uses vunetid and password
-            if ( (!isset($user['password']) || !$user['password'])
-              && (!isset($user['vuuser']) || !$user['vuuser'] )) {
-              return array('status'=>'error', 'message'=>'A password is required for non Vanderbilt users.');
-            }
-
-            // Got required params. Ok to insert user
-            $user['ip_address'] = $_SERVER['REMOTE_ADDR'];
-
-            $this->rx_error_log(['saving db user: ', $user]);
-            // password and salt generate by User Class
-            $userObj = new User($user);
-            $user['password'] = $userObj->getPassword();
-            $user['salt'] = $userObj->getSalt();
-
-            $this->conn->insert('users', $user);
-            $userId = $this->conn->lastInsertId();
-            // insert into users_roles_projects
-            $this->updateUserRoleProject($userId, $roles, 1);
-
-            $account['userId'] = $userId;
-            $account['roles'] = $roles;
-
-            $account = $this->formatUserForReturn($account);
-            return array('user'=>$account);
-
-        } catch (DBALException $e) {
-            $this->rx_error_log($e);
-            die("Error: " . $e);
-        }
+        return array('user'=>$account);
+//        try {
+//            $user = array();
+//            $this->parseUser($account, $user, $roles);
+//
+//            // Check for required params
+//            if(!isset($user['username'])) {
+//              // return error, no username
+//              return array('status'=>'error','message'=>'Username is required.');
+//            }
+//            // check if the username exists
+//            if($this->existsUser($user['username'])){
+//              // return error, user already exists
+//              $this->rx_error_log("User exists ");
+//              return array('status'=>'error', 'message'=>'User already exists');
+//            }
+//            // Check for password or vuuser who uses vunetid and password
+//            if ( (!isset($user['password']) || !$user['password'])
+//              && (!isset($user['vuuser']) || !$user['vuuser'] )) {
+//              return array('status'=>'error', 'message'=>'A password is required for non Vanderbilt users.');
+//            }
+//
+//            // Got required params. Ok to insert user
+//            $user['ip_address'] = $_SERVER['REMOTE_ADDR'];
+//
+//            $this->rx_error_log(['saving db user: ', $user]);
+//            // password and salt generate by User Class
+//            $userObj = new User($user);
+//            $user['password'] = $userObj->getPassword();
+//            $user['salt'] = $userObj->getSalt();
+//
+//            $this->conn->insert('users', $user);
+//            $userId = $this->conn->lastInsertId();
+//            // insert into users_roles_projects
+//            $this->updateUserRoleProject($userId, $roles, 1);
+//
+//            $account['userId'] = $userId;
+//            $account['roles'] = $roles;
+//
+//            $account = $this->formatUserForReturn($account);
+//            return array('user'=>$account);
+//
+//        } catch (DBALException $e) {
+//            $this->rx_error_log($e);
+//            die("Error: " . $e);
+//        }
     }
     private function existsUser($username = '')
     {
