@@ -1,0 +1,9 @@
+*.pyc
+*.tar.gz
+*2017*
+env
+cmds
+SOURCES
+TMP
+.DS_Store
+*xlsx
