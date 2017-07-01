@@ -83,8 +83,6 @@ class TokenAuthenticator extends AbstractGuardAuthenticator
         $userToken = new UserToken();
         $r = $userToken->getToken($user);
 
-        
-
         $res = array(
             'timestamp' => time(),
             'status' => 'success',
@@ -94,8 +92,8 @@ class TokenAuthenticator extends AbstractGuardAuthenticator
                 'user' => array(
                     'userId' => $user->getId(),
                     'username' => $user->getUsername(),
-                    'company' =>$user->getCompany(),
-                    'phone' =>$user->getPhone(),
+                    'groups' => $user->getGroups(),
+                    'email' => $user->getEmail(),
                     'exp' => $r['exp'],
                     'token' => $r['token']
                 )

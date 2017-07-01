@@ -14,15 +14,12 @@ class UserToken
         date_default_timezone_set("UTC");
         $exp = time() + (7 * 24 * 60 * 60);
         $payload = array(
-            'iss'      => 'carbonado',
+            'iss'      => 'carbonado_dc',
             // token expire a week from now
             'exp'      => $exp,
             'id'       => $user->getId(),
             'username' => $user->getUsername(),
-            'roles'    => $user->getRoles(),
-            'projects' => $user->getProjects(),
-            'company' => $user->getCompany(),
-            'phone' => $user->getPhone()
+            'groups'   => $user->getGroups()
         );
 
         $payload = json_encode($payload);

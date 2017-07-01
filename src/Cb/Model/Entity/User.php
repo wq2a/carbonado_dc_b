@@ -12,13 +12,9 @@ class User implements UserInterface
     private $email;
     private $first_name;
     private $last_name;
-    private $roles;
-    private $projects;
+    private $groups;
 
-    private $vuuser;
     private $create_date;
-    private $company;
-    private $phone;
     private $superuser;
 
     public function __construct(array $user)
@@ -38,13 +34,9 @@ class User implements UserInterface
         $this->email = isset($user['email'])?$user['email']:'';
         $this->first_name = isset($user['first_name'])?$user['first_name']:'';
         $this->last_name = isset($user['last_name'])?$user['last_name']:'';
-        $this->roles = isset($user['roles'])?$user['roles']:array();
-        $this->projects = isset($user['projects'])?$user['projects']:array();
+        $this->groups = isset($user['groups'])?$user['groups']:array();
 
-        $this->vuuser = isset($user['vuuser'])?$user['vuuser']:0;
         $this->create_date = isset($user['create_date'])?$user['create_date']:0;
-        $this->company = isset($user['company'])?$user['company']:'';
-        $this->phone = isset($user['phone'])?$user['phone']:'';
         $this->superuser = isset($user['superuser'])?$user['superuser']:0;
     }
 
@@ -93,21 +85,9 @@ class User implements UserInterface
         return $this->username;
     }
  
-    public function getVuuser()
-    {
-        return $this->vuuser;
-    }
     public function getCreatedate()
     {
         return $this->create_date;
-    }
-    public function getCompany()
-    {
-        return $this->company;
-    }
-    public function getPhone()
-    {
-        return $this->phone;
     }
     public function getSuperuser()
     {
@@ -127,10 +107,7 @@ class User implements UserInterface
             'email'      => $this->email,
             'first_name' => $this->first_name,
             'last_name'  => $this->last_name,
-            'vuuser'     => $this->vuuser,
             'create_date'  => $this->create_date,
-            'company'    => $this->company,
-            'phone'      => $this->phone,
             'superuser'  => $this->superuser
         );
     }
@@ -140,23 +117,19 @@ class User implements UserInterface
         return array(
             'username'   => $this->username,
             'email'      => $this->email,
-            'roles'      => $this->roles,
-            'projects'   => $this->projects,
+            'groups'      => $this->groups,
             'first_name' => $this->first_name,
             'last_name'  => $this->last_name,
             'salt'       => $this->salt,
             'password'   => $this->password,
-            'vuuser'     => $this->vuuser,
             'create_date'  => $this->create_date,
-            'company'    => $this->company,
-            'phone'      => $this->phone,
             'superuser'  => $this->superuser
         );
     }
 
     public function isValid(array $user)
     {
-        if ( !isset($user['password'])
+        if (!isset($user['password'])
              || $this->password !== $this->_getPassword($user['password'])) {
             return false;
         }
