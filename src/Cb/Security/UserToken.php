@@ -6,7 +6,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class UserToken
 {
     private $user;
-    private $secret = '2GfTBRga.2uPMEnEGrbeZ7';
+    private $secret = '0TdTB4gh02uPMEnELrPeQ1';
 
     public function getToken(UserInterface $user)
     {
